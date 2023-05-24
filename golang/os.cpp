@@ -33,6 +33,7 @@
 #include <string.h>
 #include <signal.h>
 
+#if XXXXXXXXXX_TRY_TO_USE_SYS_SIGLIST
 // GLIBC >= 2.32 provides sigdescr_np but not sys_siglist in its headers
 // GLIBC <  2.32 provides sys_siglist but not sigdescr_np in its headers
 // cut this short
@@ -42,6 +43,7 @@
 extern "C" {
     extern const char * const sys_siglist[];
 }
+#endif
 #endif
 
 using golang::internal::_runtime;
@@ -287,6 +289,7 @@ string Signal::String() const {
     const Signal& sig = *this;
     const char *sigstr = nil;
 
+#if XXXXXXXXXX_TRY_TO_USE_SYS_SIGLIST
 #ifdef _WIN32
     switch (sig.signo) {
     case SIGABRT:   return "Aborted";
@@ -300,6 +303,7 @@ string Signal::String() const {
 #else
     if (0 <= sig.signo && sig.signo < NSIG)
         sigstr = ::sys_siglist[sig.signo]; // might be nil as well
+#endif
 #endif
 
     if (sigstr != nil)
