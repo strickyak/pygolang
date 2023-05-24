@@ -1,3 +1,6 @@
+I have added golang/z1.cpp with a hasty g++ runtime
+and a quick channel/goroutine test.  --strickyak
+
 ===================================================
  Pygolang - Go-like features for Python and Cython
 ===================================================
